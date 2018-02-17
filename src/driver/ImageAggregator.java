@@ -20,7 +20,7 @@ public class ImageAggregator {
     }
 
     static class Builder {
-        ImageAggregator build(List<String> extensions, List<String> directories)
+        static ImageAggregator build(List<String> extensions, List<String> directories)
         throws Exception {
             verifyLists(extensions, directories);
             List<String> verifiedExtensions = filterInvalidExtensions(extensions);
@@ -30,7 +30,7 @@ public class ImageAggregator {
             return new ImageAggregator(filterInvalidFilesFromDirectories(verifiedExtensions, verifiedDirectories));
         }
 
-        private void verifyLists(List<String> extensions, List<String> directories)
+        private static void verifyLists(List<String> extensions, List<String> directories)
         throws Exception {
             if (extensions == null || extensions.size() < 1) {
                 throw new Exception("List of extensions cannot be null or empty");
@@ -41,7 +41,7 @@ public class ImageAggregator {
             }
         }
 
-        private List<String> filterInvalidExtensions(List<String> extensions)
+        private static List<String> filterInvalidExtensions(List<String> extensions)
         throws Exception {
             assert extensions.size() >= 1;
 
@@ -59,7 +59,7 @@ public class ImageAggregator {
             return extensions;
         }
 
-        private List<String> filterInvalidDirectories(List<String> directories)
+        private static List<String> filterInvalidDirectories(List<String> directories)
         throws Exception {
             assert directories.size() >= 1;
 
@@ -76,7 +76,7 @@ public class ImageAggregator {
             return directories;
         }
 
-        private List<File> filterInvalidFilesFromDirectories(List<String> extensions, List<String> directories) {
+        private static List<File> filterInvalidFilesFromDirectories(List<String> extensions, List<String> directories) {
             List<File> validImages = new LinkedList<>();
 
             // O(N^2)
@@ -93,7 +93,7 @@ public class ImageAggregator {
             return validImages;
         }
 
-        private boolean fileHasValidExtension(File file, List<String> extensions) {
+        private static boolean fileHasValidExtension(File file, List<String> extensions) {
             String filename = file.getName();
 
             if (!filename.contains(".")) {
