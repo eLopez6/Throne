@@ -4,9 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.HashSet;
-import java.util.Properties;
-import java.util.Set;
+import java.util.*;
 
 
 public class ConfigurationManager {
@@ -27,6 +25,20 @@ public class ConfigurationManager {
 
     Properties getProperties() {
         return (Properties) configs.clone();
+    }
+
+    /**
+     * This is intended only for DIRECTORIES and EXTENSIONS
+     * @param field DIRECTORIES or EXTENSIONS
+     * @return The configuration field for use with ImageAggregator
+     */
+    List<String> getValuesForPropertyField(RequiredField field) {
+        List<String> configuredValues = new LinkedList<>();
+        String value = configs.getProperty(field.name());
+        if (null != value) {
+            configuredValues.addAll(Arrays.asList(value.split(",")));
+        }
+        return configuredValues;
     }
 
     // Method support to come:
