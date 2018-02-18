@@ -3,6 +3,7 @@ package driver;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -17,6 +18,12 @@ public class ImageAggregator {
 
     public List<File> getImages() {
         return images;
+    }
+
+    public List<File> shuffledImages() {
+        List<File> shuffledList = new LinkedList<>(images);
+        Collections.shuffle(shuffledList);
+        return shuffledList;
     }
 
     static class Builder {
