@@ -18,8 +18,7 @@ public class SlideshowDriver {
 
         ConfigurationManager config = ConfigurationManager.Builder.build(propertiesPath);
         ImageAggregator aggregator = ImageAggregator.Builder.build(
-                config.getValuesForPropertyField(RequiredField.EXTENSIONS),
-                config.getValuesForPropertyField(RequiredField.DIRECTORIES));
+                config.getValuesForPropertyField(RequiredField.EXTENSIONS), "placeholder");
 
     }
 

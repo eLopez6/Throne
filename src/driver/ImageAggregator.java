@@ -27,25 +27,13 @@ public class ImageAggregator {
     }
 
     static class Builder {
-        static ImageAggregator build(List<String> extensions, List<String> directories)
+        static ImageAggregator build(List<String> extensions, String directory)
         throws Exception {
-            verifyLists(extensions, directories);
+            verifyList(extensions);
+            verifyDirectory(directory);
             List<String> verifiedExtensions = filterInvalidExtensions(extensions);
-            List<String> verifiedDirectories = filterInvalidDirectories(directories);
 
-
-            return new ImageAggregator(filterInvalidFilesFromDirectories(verifiedExtensions, verifiedDirectories));
-        }
-
-        private static void verifyLists(List<String> extensions, List<String> directories)
-        throws Exception {
-            if (extensions == null || extensions.size() < 1) {
-                throw new Exception("List of extensions cannot be null or empty");
-            }
-
-            if (directories == null || directories.size() < 1) {
-                throw new Exception("List of directories cannot be null or empty");
-            }
+            return new ImageAggregator(filterInvalidFilesFromDirectories(verifiedExtensions, directory));
         }
 
         private static List<String> filterInvalidExtensions(List<String> extensions)
@@ -66,34 +54,13 @@ public class ImageAggregator {
             return extensions;
         }
 
-        private static List<String> filterInvalidDirectories(List<String> directories)
-        throws Exception {
-            assert directories.size() >= 1;
-
-            for (String path : directories) {
-                if (!Files.isDirectory(Paths.get(path))) {
-                    directories.remove(path);
-                }
-            }
-
-            if (directories.size() < 1) {
-                throw new Exception("No valid directories");
-            }
-
-            return directories;
-        }
-
-        private static List<File> filterInvalidFilesFromDirectories(List<String> extensions, List<String> directories) {
+        private static List<File> filterInvalidFilesFromDirectories(List<String> extensions, String directory) {
             List<File> validImages = new LinkedList<>();
 
-            // O(N^2)
-            for (String directory : directories) {
-                File[] listOfFiles = (new File(directory)).listFiles();
-
-                for (File file : listOfFiles) {
-                    if (!fileHasValidExtension(file, extensions)) {
-                        validImages.add(file);
-                    }
+            File[] listOfFiles = (new File(directory)).listFiles();
+            for (File file : listOfFiles) {
+                if (!fileHasValidExtension(file, extensions)) {
+                    validImages.add(file);
                 }
             }
 
@@ -116,6 +83,20 @@ public class ImageAggregator {
                 }
             }
             return false;
+        }
+
+        private static void verifyList(List<String> extensions)
+        throws Exception {
+            if (extensions == null || extensions.size() < 1) {
+                throw new Exception("List of extensions cannot be null or empty");
+            }
+        }
+
+        private static void verifyDirectory(String directoryPath)
+                throws Exception {
+            if (!Files.isDirectory(Paths.get(directoryPath))) {
+                throw new Exception("No valid directories");
+            }
         }
     }
 }
