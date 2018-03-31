@@ -13,8 +13,7 @@ public class ConfigurationManager {
         SHUFFLE,
         DURATION,
         AUTOPLAY,
-        EXTENSIONS,
-        DIRECTORIES
+        EXTENSIONS
     }
 
     private Properties configs;
