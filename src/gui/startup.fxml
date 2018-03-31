@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="431.0" prefWidth="800.0" style="-fx-background-color: #8F0A1B;" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <HBox layoutX="8.0" layoutY="46.0" minWidth="-Infinity" prefHeight="431.0" prefWidth="401.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="400.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <AnchorPane prefHeight="431.0" prefWidth="399.0">
+               <children>
+                  <VBox layoutX="120.0" layoutY="71.0" prefHeight="431.0" prefWidth="399.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <Button mnemonicParsing="false" prefHeight="39.0" prefWidth="235.0" text="Start Throne">
+                           <VBox.margin>
+                              <Insets left="50.0" top="145.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font size="24.0" />
+                           </font></Button>
+                        <Button layoutX="60.0" layoutY="110.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="235.0" text="Select Directory">
+                           <VBox.margin>
+                              <Insets left="50.0" top="10.0" />
+                           </VBox.margin>
+                        </Button>
+                        <Button layoutX="60.0" layoutY="171.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="235.0" text="Settings">
+                           <VBox.margin>
+                              <Insets left="50.0" top="10.0" />
+                           </VBox.margin>
+                        </Button>
+                     </children>
+                  </VBox>
+               </children>
+            </AnchorPane>
+         </children>
+      </HBox>
+      <VBox layoutX="411.0" prefHeight="431.0" prefWidth="399.0">
+         <children>
+            <AnchorPane prefHeight="432.0" prefWidth="399.0">
+               <children>
+                  <ImageView fitHeight="305.0" fitWidth="283.0" layoutX="109.0" layoutY="64.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../../Pictures/Animu/Fate/1408321381277.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
+         </children>
+      </VBox>
+      <Separator layoutX="406.0" layoutY="111.0" orientation="VERTICAL" prefHeight="200.0" />
+   </children>
+</AnchorPane>
