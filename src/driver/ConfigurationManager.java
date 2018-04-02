@@ -22,31 +22,38 @@ public class ConfigurationManager {
         this.configs = configs;
     }
 
-    Properties getProperties() {
-        return (Properties) configs.clone();
-    }
-
     /**
-     * This is intended only for DIRECTORIES and EXTENSIONS
-     * @param field DIRECTORIES or EXTENSIONS
+     * This is intended only for EXTENSIONS
+     * @param extensions EXTENSIONS enum
      * @return The configuration field for use with ImageAggregator
      */
-    List<String> getValuesForPropertyField(RequiredField field) {
-        List<String> configuredValues = new LinkedList<>();
-        String value = configs.getProperty(field.name());
+    List<String> getExtensions(RequiredField extensions) {
+        List<String> validExtensions = new LinkedList<>();
+        String value = configs.getProperty(extensions.name());
         if (null != value) {
-            configuredValues.addAll(Arrays.asList(value.split(",")));
+            validExtensions.addAll(Arrays.asList(value.split(",")));
         }
-        return configuredValues;
+        return validExtensions;
     }
 
-    // Method support to come:
-    // Modify the properties from the application
-    // That might need a method for each field? Bleaugh...
 
-    static class Builder {
+    public void changePropertyValue(String key, String value) {
+        configs.setProperty(key, value);
+    }
 
-        static ConfigurationManager build(String path)
+    // This would be my ideal, I'd like to make something like this happen on Strings -> Integer, String -> Boolean
+    public <T> T getProperty(RequiredField key, Class<T> type)
+    throws UnsupportedOperationException {
+        return type.cast(configs.getProperty(key.name()));
+    }
+
+    public String getProperty(RequiredField key) {
+        return configs.getProperty(key.name());
+    }
+
+    public static class Builder {
+
+        public static ConfigurationManager build(String path)
         throws Exception {
             Properties configuration = new Properties();
 
@@ -78,7 +85,4 @@ public class ConfigurationManager {
             return configurationFields;
         }
     }
-
-
-
 }

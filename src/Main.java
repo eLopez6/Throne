@@ -1,39 +1,54 @@
 import javafx.application.Application;
-import javafx.scene.control.Button;
-import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 import driver.*;
 import gui.*;
+
+import java.io.File;
+import java.util.List;
+
+import static driver.ConfigurationManager.RequiredField.*;
 
 /**
  * Created by Emilio Lopez on 2/25/2018.
  */
 public class Main extends Application {
 
-    private static final int SPACING = 10;
+    public static void main(String[] args)
+    throws Exception {
+        String propertiesPath = "../../Throne.properties";
 
-    public static void main(String[] args) {
-        launch(args);
+        ConfigurationManager config = ConfigurationManager.Builder.build(propertiesPath);
+        ImageAggregator aggregator = ImageAggregator.Builder.build(config.getExtensions(EXTENSIONS),
+                                                                   args[0]);
+
+        // See ideal method in ConfigurationManager.java
+//        List<File> images = (config.getProperty(SHUFFLE, Boolean.class)) ? aggregator.shuffledImages() : aggregator.getImages();
+//        int duration = config.getProperty(DURATION, Integer.class);
+//        boolean autoplay = config.getProperty(AUTOPLAY, Boolean.class);
+
+        int duration = Integer.parseInt(config.getProperty(DURATION));
+        boolean autoplay = Boolean.parseBoolean(config.getProperty(AUTOPLAY));
+
+        List<File> images;
+        boolean shuffle;
+        if ((shuffle = Boolean.parseBoolean(config.getProperty(SHUFFLE)))) {
+            images = aggregator.shuffledImages();
+        }
+        else {
+            images = aggregator.getImages();
+
+
+
+
+
+
+            launch(args);
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        primaryStage.setTitle("Throne - Semblance");
-
-        Button loadFolderButton = new Button();
-        loadFolderButton.setText("Select folder");
-
-        Button changeSettingsButton = new Button();
-        changeSettingsButton.setText("Change settings");
-
-        Button startShowButton = new Button();
-        startShowButton.setText("Start Throne");
-
-        HBox buttonBox = new HBox(SPACING);
-        buttonBox.getChildren().addAll(loadFolderButton, changeSettingsButton, startShowButton);
-
-
-        primaryStage.show();
+        // Need to get the File from the directory select and pass to the SlideShowDriver
+        // Since it's a File, I need to pass the String path to the driver
     }
 }

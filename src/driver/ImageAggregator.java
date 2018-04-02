@@ -26,8 +26,8 @@ public class ImageAggregator {
         return shuffledList;
     }
 
-    static class Builder {
-        static ImageAggregator build(List<String> extensions, String directory)
+    public static class Builder {
+        public static ImageAggregator build(List<String> extensions, String directory)
         throws Exception {
             verifyList(extensions);
             verifyDirectory(directory);
