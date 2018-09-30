@@ -1,6 +1,7 @@
 package driver;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Collections;
@@ -26,8 +27,8 @@ public class ImageAggregator {
         return shuffledList;
     }
 
-    public static class Builder {
-        public static ImageAggregator build(List<String> extensions, String directory)
+    static class Builder {
+        static ImageAggregator build(List<String> extensions, String directory)
         throws Exception {
             verifyList(extensions);
             verifyDirectory(directory);
@@ -39,27 +40,32 @@ public class ImageAggregator {
         private static List<String> filterInvalidExtensions(List<String> extensions)
         throws Exception {
             assert extensions.size() >= 1;
+            List<String> validExtensions = new LinkedList<>(extensions);
 
-            for (String extension : extensions) {
+            for (String extension : validExtensions) {
                 if (extension.charAt(0) != '.') {
-                    extensions.remove(extension);
+                    validExtensions.remove(extension);
                 }
             }
 
-            if (extensions.size() < 1) {
+            if (validExtensions.size() < 1) {
                 throw new Exception("Invalid format for extensions. They must start with '.' ");
             }
 
             // Pretty sure this isn't a safe operation
-            return extensions;
+            return validExtensions;
         }
 
-        private static List<File> filterInvalidFilesFromDirectories(List<String> extensions, String directory) {
+        private static List<File> filterInvalidFilesFromDirectories(List<String> extensions, String directory)
+        throws FileNotFoundException {
             List<File> validImages = new LinkedList<>();
 
             File[] listOfFiles = (new File(directory)).listFiles();
+            if (listOfFiles == null) {
+                throw new FileNotFoundException("Directory does not exist");
+            }
             for (File file : listOfFiles) {
-                if (!fileHasValidExtension(file, extensions)) {
+                if (fileHasValidExtension(file, extensions)) {
                     validImages.add(file);
                 }
             }
