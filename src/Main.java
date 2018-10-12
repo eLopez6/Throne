@@ -34,20 +34,18 @@ public class Main extends Application {
         boolean shuffle;
         if ((shuffle = Boolean.parseBoolean(config.getProperty(SHUFFLE)))) {
             images = aggregator.shuffledImages();
-        }
-        else {
+        } else {
             images = aggregator.getImages();
 
 
-
-
-
-
             launch(args);
+        }
+
+
     }
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start (Stage primaryStage){
         // Need to get the File from the directory select and pass to the SlideShowDriver
         // Since it's a File, I need to pass the String path to the driver
     }

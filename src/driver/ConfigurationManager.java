@@ -9,7 +9,7 @@ import java.util.*;
 
 public class ConfigurationManager {
 
-    enum RequiredField {
+    public enum RequiredField {
         SHUFFLE,
         DURATION,
         AUTOPLAY,
@@ -27,7 +27,7 @@ public class ConfigurationManager {
      * @param extensions EXTENSIONS enum
      * @return The configuration field for use with ImageAggregator
      */
-    List<String> getExtensions(RequiredField extensions) {
+    public List<String> getExtensions(RequiredField extensions) {
         List<String> validExtensions = new LinkedList<>();
         String value = configs.getProperty(extensions.name());
         if (null != value) {
