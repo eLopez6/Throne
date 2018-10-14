@@ -59,7 +59,7 @@ public class Main extends Application {
     throws Exception {
         // Need to get the File from the directory select and pass to the SlideShowDriver
         // Since it's a File, I need to pass the String path to the driver
-        FXMLLoader loader = new FXMLLoader(Main.class.getResource("gui/startup.fxml"));
+        FXMLLoader loader = new FXMLLoader(Main.class.getResource("gui/fxml/startup.fxml"));
         AnchorPane page = loader.load();
         Scene scene = new Scene(page);
 

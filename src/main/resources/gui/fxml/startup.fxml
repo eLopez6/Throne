@@ -47,7 +47,7 @@
                <children>
                   <ImageView fitHeight="305.0" fitWidth="283.0" layoutX="109.0" layoutY="64.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../../Pictures/Animu/Fate/1408321381277.png" />
+                        <Image url="@/gui/images/rejoice.png" />
                      </image>
                   </ImageView>
                </children>

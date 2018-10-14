@@ -75,3 +75,4 @@ fabric.properties
 
 .idea/
 Throne.iml
+target/
