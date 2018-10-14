@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="431.0" prefWidth="800.0" style="-fx-background-color: #8F0A1B;" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:controller="gui.controllers.StartupController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="431.0" prefWidth="800.0" style="-fx-background-color: #8F0A1B;" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <HBox layoutX="8.0" layoutY="46.0" minWidth="-Infinity" prefHeight="431.0" prefWidth="401.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="400.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -18,19 +18,19 @@
                <children>
                   <VBox layoutX="120.0" layoutY="71.0" prefHeight="431.0" prefWidth="399.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <Button mnemonicParsing="false" prefHeight="39.0" prefWidth="235.0" text="Start Throne">
+                        <Button fx:id="startButton" mnemonicParsing="false" prefHeight="39.0" prefWidth="235.0" text="Start Throne">
                            <VBox.margin>
                               <Insets left="50.0" top="145.0" />
                            </VBox.margin>
                            <font>
                               <Font size="24.0" />
                            </font></Button>
-                        <Button layoutX="60.0" layoutY="110.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="235.0" text="Select Directory">
+                        <Button fx:id="selectDirectory" layoutX="60.0" layoutY="110.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="235.0" text="Select Directory">
                            <VBox.margin>
                               <Insets left="50.0" top="10.0" />
                            </VBox.margin>
                         </Button>
-                        <Button layoutX="60.0" layoutY="171.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="235.0" text="Settings">
+                        <Button fx:id="settingsButton" layoutX="60.0" layoutY="171.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="235.0" text="Settings">
                            <VBox.margin>
                               <Insets left="50.0" top="10.0" />
                            </VBox.margin>

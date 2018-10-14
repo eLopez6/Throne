@@ -1,5 +1,6 @@
 package driver;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.nio.file.Files;
@@ -42,9 +43,9 @@ public class ConfigurationManager {
     }
 
     // This would be my ideal, I'd like to make something like this happen on Strings -> Integer, String -> Boolean
-    public <T> T getProperty(RequiredField key, Class<T> type)
+    public <T> T getProperty(String key, Class<T> type)
     throws UnsupportedOperationException {
-        return type.cast(configs.getProperty(key.name()));
+        return type.cast(configs.getProperty(key));
     }
 
     public String getProperty(RequiredField key) {
@@ -57,10 +58,12 @@ public class ConfigurationManager {
         throws Exception {
             Properties configuration = new Properties();
 
-            if (!Files.isDirectory(Paths.get(path))) {
-                throw new FileNotFoundException("Path to .properties is invalid");
+            File file = new File("user.dir/" + path, "Throne.properties");
+
+            if (file.isDirectory()) {
+                throw new FileNotFoundException("Path to .properties is invalid, directory");
             }
-            configuration.load(new FileReader(path));
+            configuration.load(new FileReader(file));
 
             verifyConfigurationFields(configuration);
             return new ConfigurationManager(configuration);
