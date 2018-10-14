@@ -3,8 +3,7 @@ package driver;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.io.IOException;
 import java.util.*;
 
 
@@ -44,8 +43,14 @@ public class ConfigurationManager {
 
     // This would be my ideal, I'd like to make something like this happen on Strings -> Integer, String -> Boolean
     public <T> T getProperty(String key, Class<T> type)
-    throws UnsupportedOperationException {
-        return type.cast(configs.getProperty(key));
+    throws Exception {
+
+        String property = configs.getProperty(key);
+        if (property == null) {
+            throw new Exception("Invalid key supplied");
+        }
+
+        return type.cast(property);
     }
 
     public String getProperty(RequiredField key) {
@@ -54,33 +59,55 @@ public class ConfigurationManager {
 
     public static class Builder {
 
+        /**
+         * Creates a ConfigurationManager with the properties set in Throne.properties
+         * @param path relative path from user.dir for the Throne.properties
+         * @return new ConfigurationManager
+         * @throws Exception Throne.properties not found
+         */
         public static ConfigurationManager build(String path)
         throws Exception {
-            Properties configuration = new Properties();
-
-            File file = new File("user.dir/" + path, "Throne.properties");
-
-            if (file.isDirectory()) {
-                throw new FileNotFoundException("Path to .properties is invalid, directory");
-            }
-            configuration.load(new FileReader(file));
-
+            Properties configuration = getPropertiesFromPath(path);
             verifyConfigurationFields(configuration);
             return new ConfigurationManager(configuration);
         }
 
+        /**
+         * This should be used only for unit testing.
+         * @param properties valid properties file
+         * @return new ConfigurationManager
+         * @throws Exception Throne.properties not found
+         */
+        public static ConfigurationManager build(Properties properties)
+        throws Exception {
+            verifyConfigurationFields(properties);
+            return new ConfigurationManager(properties);
+        }
+
+        private static Properties getPropertiesFromPath(String path)
+        throws IOException {
+            Properties configuration = new Properties();
+
+            File file = new File("user.dir/" + path, "Throne.properties");
+            if (file.isDirectory()) {
+                throw new FileNotFoundException("Path to .properties is invalid, directory");
+            }
+            configuration.load(new FileReader(file));
+            return configuration;
+        }
+
         private static void verifyConfigurationFields(Properties config)
         throws Exception {
-            Set<String> configurationFields = fieldsAsSet();
+            Set<String> requiredConfigurationFields = requiredFieldsAsSet();
 
-            for (String key : configurationFields) {
+            for (String key : requiredConfigurationFields) {
                 if (config.getProperty(key) == null) {
                     throw new Exception("Missing required configuration key: " + key);
                 }
             }
         }
 
-        private static Set<String> fieldsAsSet() {
+        private static Set<String> requiredFieldsAsSet() {
             Set<String> configurationFields = new HashSet<>();
             for (RequiredField field : RequiredField.values()) {
                 configurationFields.add(field.name());
