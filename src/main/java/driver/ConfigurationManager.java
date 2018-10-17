@@ -43,7 +43,6 @@ public class ConfigurationManager {
     // This would be my ideal, I'd like to make something like this happen on Strings -> Integer, String -> Boolean
     public <T> T getProperty(String key, Class<T> type)
     throws Exception {
-
         String property = configs.getProperty(key);
         if (property == null) {
             throw new Exception("Invalid key supplied");

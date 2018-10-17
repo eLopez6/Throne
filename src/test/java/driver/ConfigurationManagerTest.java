@@ -48,10 +48,13 @@ class ConfigurationManagerTest {
     @Test
     void givenValidKey_getProperty_returnsValue()
     throws Exception {
+        // Given
         String validKey = "optional";
 
+        // When
         String property = manager.getProperty(validKey, String.class);
 
+        // Then
         Assertions.assertEquals("optionalValue", property);
     }
 
