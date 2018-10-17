@@ -23,10 +23,14 @@ class ConfigurationManagerTest {
     static void setupClass()
     throws Exception {
         String validExtensions = "jpg,png";
+        String optionalKey = "optional";
         given(mockProperties.getProperty(EXTENSIONS.name())).willReturn(validExtensions);
         given(mockProperties.getProperty(SHUFFLE.name())).willReturn("false");
         given(mockProperties.getProperty(DURATION.name())).willReturn("3");
         given(mockProperties.getProperty(AUTOPLAY.name())).willReturn("true");
+
+        given(mockProperties.getProperty(optionalKey)).willReturn("optionalValue");
+
         manager = ConfigurationManager.Builder.build(mockProperties);
     }
 
@@ -39,6 +43,16 @@ class ConfigurationManagerTest {
         Assertions.assertThrows(Exception.class, () -> manager.getProperty(invalidKey, String.class));
 
         // Then - throws Exception
+    }
+
+    @Test
+    void givenValidKey_getProperty_returnsValue()
+    throws Exception {
+        String validKey = "optional";
+
+        String property = manager.getProperty(validKey, String.class);
+
+        Assertions.assertEquals("optionalValue", property);
     }
 
     @Test
