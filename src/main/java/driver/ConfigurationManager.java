@@ -24,12 +24,11 @@ public class ConfigurationManager {
 
     /**
      * This is intended only for EXTENSIONS
-     * @param extensions EXTENSIONS enum
-     * @return The configuration field for use with ImageAggregator
+     * @return The extensions configuration field for use with ImageAggregator
      */
-    public List<String> getExtensions(RequiredField extensions) {
+    public List<String> getExtensions() {
         List<String> validExtensions = new LinkedList<>();
-        String value = configs.getProperty(extensions.name());
+        String value = configs.getProperty(RequiredField.EXTENSIONS.name());
         if (null != value) {
             validExtensions.addAll(Arrays.asList(value.split(",")));
         }

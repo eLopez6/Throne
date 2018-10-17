@@ -25,10 +25,10 @@ public class Main extends Application {
 
         ImageAggregator aggregator = null;
         if (args.length > 1) {
-            aggregator = ImageAggregator.Builder.build(config.getExtensions(EXTENSIONS), args[0]);
+            aggregator = ImageAggregator.Builder.build(config.getExtensions(), args[0]);
         }
         else {
-            aggregator = ImageAggregator.Builder.build(config.getExtensions(EXTENSIONS), config.getProperty("DIRECTORY", String.class));
+            aggregator = ImageAggregator.Builder.build(config.getExtensions(), config.getProperty("DIRECTORY", String.class));
         }
 
 

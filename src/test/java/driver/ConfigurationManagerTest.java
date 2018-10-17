@@ -1,47 +1,55 @@
 package driver;
 
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
+import java.util.List;
 import java.util.Properties;
 
 import static org.mockito.BDDMockito.given;
-
-import static org.mockito.Matchers.anyString;
 import static driver.ConfigurationManager.RequiredField.*;
 import static org.mockito.Mockito.mock;
 
-public class ConfigurationManagerTest {
+class ConfigurationManagerTest {
 
     private static ConfigurationManager manager;
 
     @Mock
     private static Properties mockProperties = mock(Properties.class);
 
-
-    @BeforeClass
-    public static void setupClass()
+    @BeforeAll
+    static void setupClass()
     throws Exception {
-        given(mockProperties.getProperty(EXTENSIONS.name())).willReturn(anyString());
-        given(mockProperties.getProperty(SHUFFLE.name())).willReturn(anyString());
-        given(mockProperties.getProperty(DURATION.name())).willReturn(anyString());
-        given(mockProperties.getProperty(AUTOPLAY.name())).willReturn(anyString());
-
+        String validExtensions = "jpg,png";
+        given(mockProperties.getProperty(EXTENSIONS.name())).willReturn(validExtensions);
+        given(mockProperties.getProperty(SHUFFLE.name())).willReturn("false");
+        given(mockProperties.getProperty(DURATION.name())).willReturn("3");
+        given(mockProperties.getProperty(AUTOPLAY.name())).willReturn("true");
         manager = ConfigurationManager.Builder.build(mockProperties);
     }
 
-    @Test(expected=Exception.class)
-    public void givenInvalidKey_getProperty_throwsException()
-    throws Exception {
-
+    @Test
+    void givenInvalidKey_getProperty_throwsException() {
         // Given
         String invalidKey = "Invalid";
 
         // When
-        manager.getProperty(invalidKey, String.class);
+        Assertions.assertThrows(Exception.class, () -> manager.getProperty(invalidKey, String.class));
 
         // Then - throws Exception
+    }
+
+    @Test
+    void givenValidExtenstions_getExtensions_returnsValidExtensions() {
+        // Given
+
+        // When
+        List<String> validExtensions = manager.getExtensions();
+
+        // Then
+        Assertions.assertTrue(validExtensions.contains("jpg"));
+        Assertions.assertTrue(validExtensions.contains("png"));
     }
 }
