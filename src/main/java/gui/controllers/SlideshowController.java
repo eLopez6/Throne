@@ -1,19 +1,32 @@
 package gui.controllers;
 
+import driver.ImageManager;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class SlideshowController {
 
-    private int currentImageIndex = 0;
+    private ImageManager imageManager;
+
+    private int duration;
+
+    private boolean autoplay;
 
     @FXML
     private ImageView img;
 
 
-    public void nextImage(String path) {
-        img.setImage(new Image(path));
+    void setImageManager(ImageManager manager) {
+        imageManager = manager;
+    }
+
+    void setDuration(int duration) {
+        this.duration = duration;
+    }
+
+    void setAutoplay(boolean autoplay) {
+        this.autoplay = autoplay;
     }
 
 

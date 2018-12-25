@@ -1,4 +1,3 @@
-import driver.ImageManager;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -6,55 +5,14 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-import driver.*;
-//import gui.controllers.*;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
-import static driver.ConfigurationManager.RequiredField.*;
 
 /**
  * Created by Emilio Lopez on 2/25/2018.
  */
 public class Main extends Application {
 
-    public static void main(String[] args)
-    throws Exception {
-        String propertiesPath = "../";
-
-        ConfigurationManager config = ConfigurationManager.Builder.build(propertiesPath);
-
-        ImageManager aggregator = null;
-        if (args.length > 1) {
-            aggregator = ImageManager.Builder.build(config.getExtensions(), args[0]);
-        }
-        else {
-            aggregator = ImageManager.Builder.build(config.getExtensions(), config.getProperty("DIRECTORY", String.class));
-        }
-
-
-        // See ideal method in ConfigurationManager.java
-//        List<File> images = (config.getProperty(SHUFFLE, Boolean.class)) ? aggregator.shuffledImages() : aggregator.getImages();
-//        int duration = config.getProperty(DURATION, Integer.class);
-//        boolean autoplay = config.getProperty(AUTOPLAY, Boolean.class);
-
-        int duration = Integer.parseInt(config.getProperty(DURATION));
-        boolean autoplay = Boolean.parseBoolean(config.getProperty(AUTOPLAY));
-
-        ArrayList<Image> images;
-        boolean shuffle;
-        if ((shuffle = Boolean.parseBoolean(config.getProperty(SHUFFLE)))) {
-            images = aggregator.getImages();
-        } else {
-            aggregator.shuffleImages();
-            images = aggregator.getImages();
-
-            launch(args);
-        }
-
-
+    public static void main(String[] args) {
+        launch(args);
     }
 
     @Override
