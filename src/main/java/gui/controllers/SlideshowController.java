@@ -4,7 +4,10 @@ import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-public class Slideshow {
+public class SlideshowController {
+
+    private int currentImageIndex = 0;
+
     @FXML
     private ImageView img;
 

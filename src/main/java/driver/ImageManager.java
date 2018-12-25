@@ -1,40 +1,51 @@
 package driver;
 
+import javafx.scene.image.Image;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-public class ImageAggregator {
+public class ImageManager {
 
-    private List<File> images;
+    /**
+     * Unused constructor, must be created from Builder
+     */
+    private ImageManager() {}
 
-    private ImageAggregator(List<File> images) {
+    private ArrayList<Image> images;    // needs to be ArrayList for O(1) random access
+
+
+    private ImageManager(ArrayList<Image> images) {
         this.images = images;
     }
 
 
-    public List<File> getImages() {
+    public ArrayList<Image> getImages() {
         return images;
     }
 
-    public List<File> shuffledImages() {
-        List<File> shuffledList = new LinkedList<>(images);
-        Collections.shuffle(shuffledList);
-        return shuffledList;
+    public Image getImage(int index) {
+        return images.get(index);
+    }
+
+    public void shuffleImages() {
+        Collections.shuffle(images);
     }
 
     public static class Builder {
-        public static ImageAggregator build(List<String> extensions, String directory)
+        public static ImageManager build(List<String> extensions, String directory)
         throws Exception {
             verifyList(extensions);
             verifyDirectory(directory);
             List<String> verifiedExtensions = filterInvalidExtensions(extensions);
 
-            return new ImageAggregator(filterInvalidFilesFromDirectories(verifiedExtensions, directory));
+            return new ImageManager(filterInvalidFilesFromDirectories(verifiedExtensions, directory));
         }
 
         private static List<String> filterInvalidExtensions(List<String> extensions)
@@ -56,9 +67,9 @@ public class ImageAggregator {
             return validExtensions;
         }
 
-        private static List<File> filterInvalidFilesFromDirectories(List<String> extensions, String directory)
+        private static ArrayList<Image> filterInvalidFilesFromDirectories(List<String> extensions, String directory)
         throws FileNotFoundException {
-            List<File> validImages = new LinkedList<>();
+            ArrayList<Image> validImages = new ArrayList<>();
 
             File[] listOfFiles = (new File(directory)).listFiles();
             if (listOfFiles == null) {
@@ -66,7 +77,7 @@ public class ImageAggregator {
             }
             for (File file : listOfFiles) {
                 if (fileHasValidExtension(file, extensions)) {
-                    validImages.add(file);
+                    validImages.add(new Image(file.toURI().toString()));
                 }
             }
 

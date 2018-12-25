@@ -18,14 +18,14 @@
                <children>
                   <VBox layoutX="120.0" layoutY="71.0" prefHeight="431.0" prefWidth="399.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <Button fx:id="startButton" mnemonicParsing="false" prefHeight="39.0" prefWidth="235.0" text="Start Throne">
+                        <Button fx:id="startButton" mnemonicParsing="false" prefHeight="39.0" prefWidth="235.0" text="Start Throne" onAction="#startButtonClicked">
                            <VBox.margin>
                               <Insets left="50.0" top="145.0" />
                            </VBox.margin>
                            <font>
                               <Font size="24.0" />
                            </font></Button>
-                        <Button fx:id="selectDirectory" layoutX="60.0" layoutY="110.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="235.0" text="Select Directory">
+                        <Button fx:id="selectDirectory" layoutX="60.0" layoutY="110.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="235.0" text="Select Directory" onAction="#selectDirectoryButtonClicked">
                            <VBox.margin>
                               <Insets left="50.0" top="10.0" />
                            </VBox.margin>
@@ -45,7 +45,7 @@
          <children>
             <AnchorPane prefHeight="432.0" prefWidth="399.0">
                <children>
-                  <ImageView fitHeight="305.0" fitWidth="283.0" layoutX="109.0" layoutY="64.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="REJOICE" fitHeight="305.0" fitWidth="283.0" layoutX="109.0" layoutY="64.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@/gui/images/rejoice.png" />
                      </image>
