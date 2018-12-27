@@ -45,7 +45,7 @@ public class ConfigurationManager {
 
     public void changePropertyValue(String key, String value)
     throws Exception {
-        File file = new File("..");
+        File file = new File(propertiesPath);
         file = file.getAbsoluteFile();
         file = file.getParentFile();
         file = new File(file.getAbsolutePath() + "/Throne.properties");
