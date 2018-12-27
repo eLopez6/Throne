@@ -1,9 +1,6 @@
 package driver;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 
 
@@ -17,7 +14,17 @@ public class ConfigurationManager {
     }
 
     private Properties configs;
+    private String propertiesPath;
 
+    private ConfigurationManager(Properties configs, String path) {
+        this.configs = configs;
+        propertiesPath = path;
+    }
+
+    /**
+     * Do not use, only for testing right now
+     * @param configs
+     */
     private ConfigurationManager(Properties configs) {
         this.configs = configs;
     }
@@ -36,8 +43,21 @@ public class ConfigurationManager {
     }
 
 
-    public void changePropertyValue(String key, String value) {
-        configs.setProperty(key, value);
+    public void changePropertyValue(String key, String value)
+    throws Exception {
+        File file = new File("..");
+        file = file.getAbsoluteFile();
+        file = file.getParentFile();
+        file = new File(file.getAbsolutePath() + "/Throne.properties");
+        FileInputStream input = new FileInputStream(file);
+        Properties props = new Properties();
+        props.load(input);
+        input.close();
+
+        FileOutputStream output = new FileOutputStream(file);
+        props.setProperty(key, value);
+        props.store(output, null);
+        output.close();
     }
 
     // This would be my ideal, I'd like to make something like this happen on Strings -> Integer, String -> Boolean
@@ -67,7 +87,7 @@ public class ConfigurationManager {
         throws Exception {
             Properties configuration = getPropertiesFromPath(path);
             verifyConfigurationFields(configuration);
-            return new ConfigurationManager(configuration);
+            return new ConfigurationManager(configuration, path);
         }
 
         /**

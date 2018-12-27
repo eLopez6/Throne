@@ -1,40 +1,56 @@
 package driver;
 
+import javafx.scene.image.Image;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-public class ImageAggregator {
+public class ImageManager {
 
-    private List<File> images;
+    private ArrayList<Image> images;
+    private int curImageIndex = 0;
+    private int IMAGES_LENGTH;
 
-    private ImageAggregator(List<File> images) {
+    public Image firstImage() {
+        return images.get(0);
+    }
+
+    public Image nextImage() {
+        curImageIndex = Math.floorMod(++curImageIndex, IMAGES_LENGTH);
+        return images.get(curImageIndex);
+    }
+
+
+    public Image previousImage() {
+        curImageIndex = Math.floorMod(--curImageIndex, IMAGES_LENGTH);
+        return images.get(curImageIndex);
+    }
+
+
+    public void shuffleImages() {
+        Collections.shuffle(images);
+    }
+
+
+    private ImageManager(ArrayList<Image> images) {
         this.images = images;
-    }
-
-
-    public List<File> getImages() {
-        return images;
-    }
-
-    public List<File> shuffledImages() {
-        List<File> shuffledList = new LinkedList<>(images);
-        Collections.shuffle(shuffledList);
-        return shuffledList;
+        this.IMAGES_LENGTH = images.size();
     }
 
     public static class Builder {
-        public static ImageAggregator build(List<String> extensions, String directory)
+        public static ImageManager build(List<String> extensions, String directory)
         throws Exception {
             verifyList(extensions);
             verifyDirectory(directory);
             List<String> verifiedExtensions = filterInvalidExtensions(extensions);
 
-            return new ImageAggregator(filterInvalidFilesFromDirectories(verifiedExtensions, directory));
+            return new ImageManager(filterInvalidFilesFromDirectories(verifiedExtensions, directory));
         }
 
         private static List<String> filterInvalidExtensions(List<String> extensions)
@@ -56,9 +72,9 @@ public class ImageAggregator {
             return validExtensions;
         }
 
-        private static List<File> filterInvalidFilesFromDirectories(List<String> extensions, String directory)
+        private static ArrayList<Image> filterInvalidFilesFromDirectories(List<String> extensions, String directory)
         throws FileNotFoundException {
-            List<File> validImages = new LinkedList<>();
+            ArrayList<Image> validImages = new ArrayList<>();
 
             File[] listOfFiles = (new File(directory)).listFiles();
             if (listOfFiles == null) {
@@ -66,7 +82,7 @@ public class ImageAggregator {
             }
             for (File file : listOfFiles) {
                 if (fileHasValidExtension(file, extensions)) {
-                    validImages.add(file);
+                    validImages.add(new Image(file.toURI().toString()));
                 }
             }
 
