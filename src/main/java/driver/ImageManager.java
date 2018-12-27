@@ -13,29 +13,34 @@ import java.util.List;
 
 public class ImageManager {
 
-    /**
-     * Unused constructor, must be created from Builder
-     */
-    private ImageManager() {}
+    private ArrayList<Image> images;
+    private int curImageIndex = 0;
+    private int IMAGES_LENGTH;
 
-    private ArrayList<Image> images;    // needs to be ArrayList for O(1) random access
+    public Image firstImage() {
+        return images.get(0);
+    }
+
+    public Image nextImage() {
+        curImageIndex = Math.floorMod(++curImageIndex, IMAGES_LENGTH);
+        return images.get(curImageIndex);
+    }
+
+
+    public Image previousImage() {
+        curImageIndex = Math.floorMod(--curImageIndex, IMAGES_LENGTH);
+        return images.get(curImageIndex);
+    }
+
+
+    public void shuffleImages() {
+        Collections.shuffle(images);
+    }
 
 
     private ImageManager(ArrayList<Image> images) {
         this.images = images;
-    }
-
-
-    public ArrayList<Image> getImages() {
-        return images;
-    }
-
-    public Image getImage(int index) {
-        return images.get(index);
-    }
-
-    public void shuffleImages() {
-        Collections.shuffle(images);
+        this.IMAGES_LENGTH = images.size();
     }
 
     public static class Builder {

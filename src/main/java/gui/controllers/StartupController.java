@@ -60,6 +60,8 @@ public class StartupController  {
         slideshowController.setImageManager(imageManager);
         slideshowController.setDuration(duration);
         slideshowController.setAutoplay(autoplay);
+        slideshowController.setFirstImage();
+        slideshowController.setUpTimer();
 
         Scene scene = new Scene(root);
 
@@ -78,10 +80,11 @@ public class StartupController  {
     }
 
     @FXML
-    public void selectDirectoryButtonClicked() {
+    public void selectDirectoryButtonClicked()
+    throws Exception {
         DirectoryChooser chooser = new DirectoryChooser();
         File selectedDirectory = chooser.showDialog(selectDirectory.getScene().getWindow());
-
-        System.out.println(selectedDirectory.getAbsolutePath());
+        ConfigurationManager manager = ConfigurationManager.Builder.build("../");
+        manager.changePropertyValue("DIRECTORY", selectedDirectory.getAbsolutePath());
     }
 }
