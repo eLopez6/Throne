@@ -13,23 +13,24 @@ import java.util.List;
 
 public class ImageManager {
 
-    private ArrayList<Image> images;
+    private ArrayList<String> images;
     private int curImageIndex = 0;
     private int IMAGES_LENGTH;
 
     public Image firstImage() {
-        return images.get(0);
+        return new Image(images.get(0));
     }
+
 
     public Image nextImage() {
         curImageIndex = Math.floorMod(++curImageIndex, IMAGES_LENGTH);
-        return images.get(curImageIndex);
+        return new Image(images.get(curImageIndex));
     }
 
 
     public Image previousImage() {
         curImageIndex = Math.floorMod(--curImageIndex, IMAGES_LENGTH);
-        return images.get(curImageIndex);
+        return new Image(images.get(curImageIndex));
     }
 
 
@@ -38,7 +39,7 @@ public class ImageManager {
     }
 
 
-    private ImageManager(ArrayList<Image> images) {
+    private ImageManager(ArrayList<String> images) {
         this.images = images;
         this.IMAGES_LENGTH = images.size();
     }
@@ -72,9 +73,9 @@ public class ImageManager {
             return validExtensions;
         }
 
-        private static ArrayList<Image> filterInvalidFilesFromDirectories(List<String> extensions, String directory)
+        private static ArrayList<String> filterInvalidFilesFromDirectories(List<String> extensions, String directory)
         throws FileNotFoundException {
-            ArrayList<Image> validImages = new ArrayList<>();
+            ArrayList<String> validImages = new ArrayList<>();
 
             File[] listOfFiles = (new File(directory)).listFiles();
             if (listOfFiles == null) {
@@ -82,7 +83,7 @@ public class ImageManager {
             }
             for (File file : listOfFiles) {
                 if (fileHasValidExtension(file, extensions)) {
-                    validImages.add(new Image(file.toURI().toString()));
+                    validImages.add(file.toURI().toString());
                 }
             }
 
