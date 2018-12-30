@@ -7,17 +7,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
 
 import static driver.ConfigurationManager.RequiredField.*;
 
@@ -84,6 +79,11 @@ public class StartupController  {
     throws Exception {
         DirectoryChooser chooser = new DirectoryChooser();
         File selectedDirectory = chooser.showDialog(selectDirectory.getScene().getWindow());
+
+        if (selectedDirectory == null) {    // No directory selected
+            return;
+        }
+
         ConfigurationManager manager = ConfigurationManager.Builder.build("../");
         manager.changePropertyValue("DIRECTORY", selectedDirectory.getAbsolutePath());
     }
