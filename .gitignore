@@ -76,3 +76,6 @@ fabric.properties
 .idea/
 Throne.iml
 target/
+src/main/resources/gui/images/41003_1360250180520_7237579_n.jpg
+src/main/resources/gui/images/icon.jpg
+src/test/java/gui/
