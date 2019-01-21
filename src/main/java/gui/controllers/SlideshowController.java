@@ -30,7 +30,7 @@ public class SlideshowController {
         if (autoplay) {
             timer = new Timeline(new KeyFrame(
                     Duration.seconds((double) duration),
-                    arg -> nextImage()));
+                    arg -> scaleAndCenterImage(imageManager.nextImage())));
             timer.setCycleCount(Animation.INDEFINITE);
             timer.play();
         }
@@ -64,7 +64,6 @@ public class SlideshowController {
     }
 
     private void scaleAndCenterImage(Image image) {
-        // scale image
         double q;
         double r;
         if (image.getWidth() > screenWidth || image.getHeight() > screenHeight) {
