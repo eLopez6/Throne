@@ -55,8 +55,10 @@ public class StartupController  {
         slideshowController.setImageManager(imageManager);
         slideshowController.setDuration(duration);
         slideshowController.setAutoplay(autoplay);
+        slideshowController.setUpImageViewSettings();
         slideshowController.setFirstImage();
         slideshowController.setUpTimer();
+
 
         Scene scene = new Scene(root);
 
@@ -65,6 +67,7 @@ public class StartupController  {
         Stage stage = new Stage();
         stage.setTitle("Slideshow!");
         stage.setScene(scene);
+        stage.setMaximized(true);
         stage.setFullScreen(true);
         stage.addEventHandler(KeyEvent.KEY_RELEASED, (KeyEvent event) -> {
             if (KeyCode.ESCAPE == event.getCode()) {
