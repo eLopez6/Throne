@@ -47,15 +47,15 @@ public class SlideshowController {
         Image image;
         KeyCode code = event.getCode();
         switch (code) {
-            case RIGHT -> {
+            case RIGHT:
                 image = imageManager.nextImage();
-            }
-            case LEFT -> {
+                break;
+            case LEFT:
                 image = imageManager.previousImage();
-            }
-            default -> {
+                break;
+            default:
                 return;
-            }
+
         }
 
         imageView.setFitHeight(0);

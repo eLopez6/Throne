@@ -91,14 +91,15 @@ public class StartupController  {
                 stage.close();
             }
             switch (code) {
-                case ESCAPE -> {
+                case ESCAPE:
                     slideshowController.stopTime();
                     stage.close();
-                }
-                case RIGHT, LEFT -> {
+                    break;
+                case RIGHT:
+                case LEFT:
                     slideshowController.stopTime();
                     slideshowController.setUpTimer();
-                }
+                    break;
             }
         });
     }
