@@ -13,9 +13,9 @@ import java.util.List;
 
 public class ImageManager {
 
-    private ArrayList<String> images;
+    private final ArrayList<String> images;
     private int curImageIndex = 0;
-    private int IMAGES_LENGTH;
+    private final int IMAGES_LENGTH;
 
     public Image firstImage() {
         return new Image(images.get(0));

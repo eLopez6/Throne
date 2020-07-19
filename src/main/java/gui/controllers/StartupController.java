@@ -69,6 +69,14 @@ public class StartupController  {
                 stage.close();
             }
         });
+        stage.addEventHandler(KeyEvent.KEY_RELEASED, (KeyEvent event) -> {
+            KeyCode code = event.getCode();
+            if (KeyCode.RIGHT == code || KeyCode.LEFT == code) {
+                slideshowController.stopTime();
+                slideshowController.setUpTimer();
+            }
+        });
+
         stage.show();
     }
 

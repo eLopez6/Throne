@@ -29,15 +29,17 @@ public class SlideshowController {
     void setUpTimer() {
         if (autoplay) {
             timer = new Timeline(new KeyFrame(
-                    Duration.seconds((double) duration),
+                    Duration.seconds(duration),
                     arg -> scaleAndCenterImage(imageManager.nextImage())));
             timer.setCycleCount(Animation.INDEFINITE);
             timer.play();
         }
     }
 
-    private void nextImage() {
-        imageView.setImage(imageManager.nextImage());
+    void stopTime() {
+        if (autoplay) {
+            timer.stop();
+        }
     }
 
     @FXML
