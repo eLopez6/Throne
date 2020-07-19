@@ -59,11 +59,7 @@ public class ImageManager {
             assert extensions.size() >= 1;
             List<String> validExtensions = new LinkedList<>(extensions);
 
-            for (String extension : validExtensions) {
-                if (extension.charAt(0) != '.') {
-                    validExtensions.remove(extension);
-                }
-            }
+            validExtensions.removeIf(extension -> extension.charAt(0) != '.');
 
             if (validExtensions.size() < 1) {
                 throw new Exception("Invalid format for extensions. They must start with '.' ");

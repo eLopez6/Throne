@@ -44,19 +44,24 @@ public class SlideshowController {
 
     @FXML
     void updateImage(KeyEvent event) {
-        Image image = null;
+        Image image;
+        KeyCode code = event.getCode();
+        switch (code) {
+            case RIGHT -> {
+                image = imageManager.nextImage();
+            }
+            case LEFT -> {
+                image = imageManager.previousImage();
+            }
+            default -> {
+                return;
+            }
+        }
 
         imageView.setFitHeight(0);
         imageView.setFitWidth(0);
         imageView.setX(0);
         imageView.setY(0);
-
-        if (KeyCode.RIGHT == event.getCode()) {
-            image = imageManager.nextImage();
-        }
-        else if (KeyCode.LEFT == event.getCode()) {
-            image = imageManager.previousImage();
-        }
 
         if (image == null) {
             return;
@@ -68,6 +73,31 @@ public class SlideshowController {
     private void scaleAndCenterImage(Image image) {
         double q;
         double r;
+
+        double[] scaledImageDimensions = scaleDimensions(image);
+        double[] centeredImageDimensions = centerDimensions(scaledImageDimensions);
+        q = centeredImageDimensions[0];
+        r = centeredImageDimensions[1];
+
+        imageView.setFitWidth(scaledImageDimensions[0]);
+        imageView.setFitHeight(scaledImageDimensions[1]);
+
+        // center image
+        imageView.setX(q);
+        imageView.setY(r);
+
+        imageView.setImage(image);
+    }
+
+    /**
+     * In this version of scaleAndCenter, the image is at original size in the middle of the screen
+     * @param image the image to be scaled and centered
+     * @throws UnsupportedOperationException this will likely not be used
+     */
+    private void scaleAndCenter0(Image image) throws UnsupportedOperationException {
+        double q;
+        double r;
+
         if (image.getWidth() > screenWidth || image.getHeight() > screenHeight) {
             double[] scaledImageDimensions = scaleDimensions(image);
             double[] centeredImageDimensions = centerDimensions(scaledImageDimensions);
@@ -85,7 +115,6 @@ public class SlideshowController {
         }
 
         // center image
-
         imageView.setX(q);
         imageView.setY(r);
 

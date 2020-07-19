@@ -64,18 +64,7 @@ public class StartupController  {
         stage.setScene(scene);
         stage.setMaximized(true);
         stage.setFullScreen(true);
-        stage.addEventHandler(KeyEvent.KEY_RELEASED, (KeyEvent event) -> {
-            if (KeyCode.ESCAPE == event.getCode()) {
-                stage.close();
-            }
-        });
-        stage.addEventHandler(KeyEvent.KEY_RELEASED, (KeyEvent event) -> {
-            KeyCode code = event.getCode();
-            if (KeyCode.RIGHT == code || KeyCode.LEFT == code) {
-                slideshowController.stopTime();
-                slideshowController.setUpTimer();
-            }
-        });
+        addHandlers(slideshowController, stage);
 
         stage.show();
     }
@@ -92,5 +81,25 @@ public class StartupController  {
 
         ConfigurationManager manager = ConfigurationManager.Builder.buildDefault();
         manager.changePropertyValue("DIRECTORY", selectedDirectory.getAbsolutePath());
+    }
+
+    private void addHandlers(SlideshowController slideshowController, Stage stage) {
+        stage.addEventHandler(KeyEvent.KEY_RELEASED, (KeyEvent event) -> {
+            KeyCode code = event.getCode();
+            if (KeyCode.ESCAPE == code) {
+                slideshowController.stopTime();
+                stage.close();
+            }
+            switch (code) {
+                case ESCAPE -> {
+                    slideshowController.stopTime();
+                    stage.close();
+                }
+                case RIGHT, LEFT -> {
+                    slideshowController.stopTime();
+                    slideshowController.setUpTimer();
+                }
+            }
+        });
     }
 }
