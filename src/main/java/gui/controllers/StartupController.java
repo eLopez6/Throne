@@ -87,7 +87,7 @@ public class StartupController  {
             return;
         }
 
-        ConfigurationManager manager = ConfigurationManager.Builder.build("../");
+        ConfigurationManager manager = ConfigurationManager.Builder.build(System.getProperty("user.dir"));
         manager.changePropertyValue("DIRECTORY", selectedDirectory.getAbsolutePath());
     }
 }

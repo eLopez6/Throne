@@ -46,8 +46,8 @@ public class ConfigurationManager {
     public void changePropertyValue(String key, String value)
     throws Exception {
         File file = new File(propertiesPath);
-        file = file.getAbsoluteFile();
-        file = file.getParentFile();
+//        file = file.getAbsoluteFile();
+//        file = file.getParentFile();
         file = new File(file.getAbsolutePath() + "/Throne.properties");
         FileInputStream input = new FileInputStream(file);
         Properties props = new Properties();
@@ -106,7 +106,7 @@ public class ConfigurationManager {
         throws IOException {
             Properties configuration = new Properties();
 
-            File file = new File("user.dir/" + path, "Throne.properties");
+            File file = new File(path + "/Throne.properties");
             if (file.isDirectory()) {
                 throw new FileNotFoundException("Path to .properties is invalid, directory");
             }
