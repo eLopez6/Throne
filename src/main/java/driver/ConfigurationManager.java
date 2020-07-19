@@ -46,8 +46,6 @@ public class ConfigurationManager {
     public void changePropertyValue(String key, String value)
     throws Exception {
         File file = new File(propertiesPath);
-//        file = file.getAbsoluteFile();
-//        file = file.getParentFile();
         file = new File(file.getAbsolutePath() + "/Throne.properties");
         FileInputStream input = new FileInputStream(file);
         Properties props = new Properties();
@@ -79,12 +77,25 @@ public class ConfigurationManager {
 
         /**
          * Creates a ConfigurationManager with the properties set in Throne.properties
+         * @return new ConfigurationManager
+         * @throws Exception Throne.properties not found
+         */
+        public static ConfigurationManager buildDefault()
+        throws Exception {
+            String path = System.getProperty("user.dir");
+            Properties configuration = getPropertiesFromPath(path);
+            verifyConfigurationFields(configuration);
+            return new ConfigurationManager(configuration, path);
+        }
+
+        /**
+         * Creates a ConfigurationManager with the properties set in Throne.properties
          * @param path relative path from user.dir for the Throne.properties
          * @return new ConfigurationManager
          * @throws Exception Throne.properties not found
          */
         public static ConfigurationManager build(String path)
-        throws Exception {
+                throws Exception {
             Properties configuration = getPropertiesFromPath(path);
             verifyConfigurationFields(configuration);
             return new ConfigurationManager(configuration, path);
@@ -96,7 +107,7 @@ public class ConfigurationManager {
          * @return new ConfigurationManager
          * @throws Exception Throne.properties not found
          */
-        public static ConfigurationManager build(Properties properties)
+        public static ConfigurationManager buildDefault(Properties properties)
         throws Exception {
             verifyConfigurationFields(properties);
             return new ConfigurationManager(properties);

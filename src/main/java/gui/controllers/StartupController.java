@@ -32,10 +32,7 @@ public class StartupController  {
     public void startButtonClicked() throws Exception {
 
         // Slideshow setup
-
-        String propertiesPath = "../";
-
-        ConfigurationManager config = ConfigurationManager.Builder.build(propertiesPath);
+        ConfigurationManager config = ConfigurationManager.Builder.buildDefault();
 
         ImageManager imageManager = ImageManager.Builder.build(config.getExtensions(), config.getProperty("DIRECTORY", String.class));
 
@@ -47,7 +44,6 @@ public class StartupController  {
         }
 
         // Controller setup
-
         FXMLLoader loader = new FXMLLoader(StartupController.class.getClassLoader().getResource("gui/fxml/slideshow.fxml"));
         Parent root = loader.load();
         SlideshowController slideshowController = loader.getController();
@@ -63,7 +59,6 @@ public class StartupController  {
         Scene scene = new Scene(root);
 
         // Actually creating the stage
-
         Stage stage = new Stage();
         stage.setTitle("Slideshow!");
         stage.setScene(scene);
@@ -87,7 +82,7 @@ public class StartupController  {
             return;
         }
 
-        ConfigurationManager manager = ConfigurationManager.Builder.build(System.getProperty("user.dir"));
+        ConfigurationManager manager = ConfigurationManager.Builder.buildDefault();
         manager.changePropertyValue("DIRECTORY", selectedDirectory.getAbsolutePath());
     }
 }

@@ -31,7 +31,7 @@ class ConfigurationManagerTest {
 
         given(mockProperties.getProperty(optionalKey)).willReturn("optionalValue");
 
-        manager = ConfigurationManager.Builder.build(mockProperties);
+        manager = ConfigurationManager.Builder.buildDefault(mockProperties);
     }
 
     @Test
