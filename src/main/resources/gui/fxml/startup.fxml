@@ -30,7 +30,7 @@
                               <Insets left="50.0" top="10.0" />
                            </VBox.margin>
                         </Button>
-                        <Button fx:id="settingsButton" layoutX="60.0" layoutY="171.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="235.0" text="Settings">
+                        <Button fx:id="settingsButton" onAction="#settingsButtonClicked" layoutX="60.0" layoutY="171.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="235.0" text="Settings">
                            <VBox.margin>
                               <Insets left="50.0" top="10.0" />
                            </VBox.margin>

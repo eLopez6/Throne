@@ -30,16 +30,15 @@ public class StartupController  {
 
     @FXML
     public void startButtonClicked() throws Exception {
-
         // Slideshow setup
         ConfigurationManager config = ConfigurationManager.Builder.buildDefault();
 
         ImageManager imageManager = ImageManager.Builder.build(config.getExtensions(), config.getProperty("DIRECTORY", String.class));
 
-        int duration = Integer.parseInt(config.getProperty(DURATION));
-        boolean autoplay = Boolean.parseBoolean(config.getProperty(AUTOPLAY));
+        int duration = config.getAutoplayDuration();
+        boolean autoplay = config.isAutoplay();
 
-        if (Boolean.parseBoolean(config.getProperty(SHUFFLE))) {
+        if (config.isShuffle()) {
             imageManager.shuffleImages();
         }
 
@@ -64,7 +63,26 @@ public class StartupController  {
         stage.setScene(scene);
         stage.setMaximized(true);
         stage.setFullScreen(true);
-        addHandlers(slideshowController, stage);
+        addSlideshowHandlers(slideshowController, stage);
+
+        stage.show();
+    }
+
+    @FXML
+    public void settingsButtonClicked() throws Exception {
+        ConfigurationManager config = ConfigurationManager.Builder.buildDefault();
+
+        // Controller setup
+        FXMLLoader loader = new FXMLLoader(SettingsController.class.getClassLoader().getResource("gui/fxml/settings.fxml"));
+        Parent root = loader.load();
+        SettingsController settingsController = loader.getController();
+
+        settingsController.startSettingsController(config);
+
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setTitle("Throne | Settings");
+        stage.setScene(scene);
 
         stage.show();
     }
@@ -83,7 +101,7 @@ public class StartupController  {
         manager.changePropertyValue("DIRECTORY", selectedDirectory.getAbsolutePath());
     }
 
-    private void addHandlers(SlideshowController slideshowController, Stage stage) {
+    private void addSlideshowHandlers(SlideshowController slideshowController, Stage stage) {
         stage.addEventHandler(KeyEvent.KEY_RELEASED, (KeyEvent event) -> {
             KeyCode code = event.getCode();
             if (KeyCode.ESCAPE == code) {

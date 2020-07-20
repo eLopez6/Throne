@@ -42,7 +42,6 @@ public class ConfigurationManager {
         return validExtensions;
     }
 
-
     public void changePropertyValue(String key, String value)
     throws Exception {
         File file = new File(propertiesPath);
@@ -58,7 +57,28 @@ public class ConfigurationManager {
         output.close();
     }
 
-    // This would be my ideal, I'd like to make something like this happen on Strings -> Integer, String -> Boolean
+    /**
+     * Writes Throne.properties with changes in one update operation.
+     * @param values changed values in Settings page
+     */
+    public void savePropertyValues(List<String> values)
+    throws Exception {
+        File file = new File(propertiesPath);
+        file = new File(file.getAbsolutePath() + "/Throne.properties");
+        FileInputStream input = new FileInputStream(file);
+        Properties props = new Properties();
+        props.load(input);
+        input.close();
+
+        FileOutputStream output = new FileOutputStream(file);
+        props.setProperty("AUTOPLAY", values.get(0));
+        props.setProperty("DURATION", values.get(1));
+        props.setProperty("SHUFFLE", values.get(2));
+        props.setProperty("EXTENSIONS", values.get(3));
+        props.store(output, null);
+        output.close();
+    }
+
     public <T> T getProperty(String key, Class<T> type)
     throws Exception {
         String property = configs.getProperty(key);
@@ -71,6 +91,18 @@ public class ConfigurationManager {
 
     public String getProperty(RequiredField key) {
         return configs.getProperty(key.name());
+    }
+
+    public boolean isAutoplay() {
+        return Boolean.parseBoolean(getProperty(RequiredField.AUTOPLAY));
+    }
+
+    public boolean isShuffle() {
+        return Boolean.parseBoolean(getProperty(RequiredField.SHUFFLE));
+    }
+
+    public int getAutoplayDuration() {
+        return Integer.parseInt(getProperty(RequiredField.DURATION));
     }
 
     public static class Builder {
