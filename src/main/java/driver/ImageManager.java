@@ -17,6 +17,10 @@ public class ImageManager {
     private int curImageIndex = 0;
     private final int IMAGES_LENGTH;
 
+    public int getIMAGES_LENGTH() {
+        return IMAGES_LENGTH;
+    }
+
     public Image firstImage() {
         return new Image(images.get(0));
     }

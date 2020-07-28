@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -25,15 +26,26 @@ public class StartupController  {
     @FXML
     private Button selectDirectory;
 
+    private ImageManager imageManager;
+
+    private ConfigurationManager config;
+
     @FXML
-    private Button settingsButton;
+    public void initialize() {
+        try {
+            config = ConfigurationManager.Builder.buildDefault();
+            imageManager = ImageManager.Builder.build(config.getExtensions(), config.getProperty(DURATION));
+        }
+        catch (Exception e) {
+            System.out.println("Error: configuration or image manager failed to build.");
+        }
+    }
 
     @FXML
     public void startButtonClicked() throws Exception {
         // Slideshow setup
-        ConfigurationManager config = ConfigurationManager.Builder.buildDefault();
-
-        ImageManager imageManager = ImageManager.Builder.build(config.getExtensions(), config.getProperty("DIRECTORY", String.class));
+        assert config != null;
+        assert imageManager != null;
 
         int duration = config.getAutoplayDuration();
         boolean autoplay = config.isAutoplay();
@@ -99,6 +111,19 @@ public class StartupController  {
 
         ConfigurationManager manager = ConfigurationManager.Builder.buildDefault();
         manager.changePropertyValue("DIRECTORY", selectedDirectory.getAbsolutePath());
+
+        assert config != null;
+        if (imageManager == null) {
+            imageManager = ImageManager.Builder.build(config.getExtensions(), config.getProperty("DIRECTORY", String.class));
+        }
+        if (imageManager.getIMAGES_LENGTH() < 1) {
+            Alert directoryAlert = new Alert(Alert.AlertType.ERROR);
+            directoryAlert.setContentText("The selected directory, " +
+                    config.getProperty("DIRECTORY", String.class) + "does not contain any files with the " +
+                    "configured extensions: " + config.getExtensions());
+            directoryAlert.show();
+            imageManager = null;
+        }
     }
 
     private void addSlideshowHandlers(SlideshowController slideshowController, Stage stage) {
